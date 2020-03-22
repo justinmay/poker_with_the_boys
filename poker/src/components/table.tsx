@@ -1,8 +1,9 @@
 import React from "react";
 import '../stylesheets/table.css';
 import TableImage from '../assets/poker_table.png';
-import Hand from './card';
-import Action from './Action'
+import Hand from './Hand';
+import Action from './Action';
+import TableCards from './TableCards';
 
   type TableProps = {
   };
@@ -19,6 +20,18 @@ import Action from './Action'
     render() {
       return (
         <div className="tableBackground">
+            <TableCards
+            card1number={"10"}
+            card2number={"J"}
+            card3number={"Q"}
+            card4number={"K"}
+            card5number={"A"}
+            card1suit={"club"}
+            card2suit={"club"}
+            card3suit={"club"}
+            card4suit={"club"}
+            card5suit={"club"}
+            />
             <div className="handLayer">
                 <div className="row">
                     <Hand card1number={"4"} card1suit={"club"} card2number={"K"} card2suit={"heart"}/>
