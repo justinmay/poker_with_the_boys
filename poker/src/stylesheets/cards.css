@@ -18,6 +18,7 @@ h1 {
     border-radius: 10px;
     text-align: center;
     font-size: 3vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.349), 0 6px 20px 0 rgba(0, 0, 0, 0.616);
 }
 
 .Hand {
