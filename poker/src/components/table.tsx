@@ -57,8 +57,7 @@ import {suits, cardNumbers, boardState} from '../enums';
   }
 
   class Table extends React.Component<TableProps, TableState> {
-    state: TableState = {
-      // optional second annotation for better type inference
+    state: TableState = { 
       p1hand: temporaryHand,
       p2hand: undefined,
       p3hand: temporaryHand,
@@ -88,7 +87,7 @@ import {suits, cardNumbers, boardState} from '../enums';
                 </div>
 
                 <div className="row">
-                  <Hand hand={temporaryHand} playerName="player" show={false}/>
+                  <Hand hand={temporaryHand} playerName="player" show={true}/>
                   <Hand hand={temporaryHand} playerName="player" show={true}/>
                   <Hand hand={temporaryHand} playerName="player" show={false}/>
                 </div>

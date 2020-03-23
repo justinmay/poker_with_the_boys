@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Table from './components/Table';
+//import Table from './components/Table';
+import Login from './components/Login';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Table />
+    <Login />
   </React.StrictMode>,
   document.getElementById('root')
 );
