@@ -4,51 +4,93 @@ import TableImage from '../assets/poker_table.png';
 import Hand from './Hand';
 import Action from './Action';
 import TableCards from './TableCards';
+import {hand, flop} from '../interfaces';
+import {suits, cardNumbers, boardState} from '../enums';
 
   type TableProps = {
   };
+
   type TableState = {
-    count: number; // like this
+    p1hand?: hand;
+    p2hand?: hand;
+    p3hand?: hand;
+    p4hand?: hand;
+    p5hand?: hand;
+    p6hand?: hand;
+    p7hand?: hand;
+    p8hand?: hand;
+    flop: flop;
   };
+
+  var temporaryHand: hand = {
+    card1: {
+      suit: suits.Club,
+      value: cardNumbers.six,
+    },
+    card2: {
+      suit: suits.Diamond,
+      value: cardNumbers.two,
+    }
+  }
+
+  var tempFlop: flop = {
+    card1: {
+      suit: suits.Club,
+      value: cardNumbers.six,
+    },
+    card2: {
+      suit: suits.Diamond,
+      value: cardNumbers.ace,
+    },
+    card3: {
+      suit: suits.Diamond,
+      value: cardNumbers.jack,
+    },
+    card4: {
+      suit: suits.Diamond,
+      value: cardNumbers.queen,
+    },
+    card5: {
+      suit: suits.Diamond,
+      value: cardNumbers.king
+    }
+  }
 
   class Table extends React.Component<TableProps, TableState> {
     state: TableState = {
       // optional second annotation for better type inference
-      count: 0
+      p1hand: temporaryHand,
+      p2hand: undefined,
+      p3hand: temporaryHand,
+      p4hand: undefined,
+      p5hand: undefined,
+      p6hand: undefined,
+      p7hand: undefined,
+      p8hand: undefined,
+      flop: tempFlop,
     };
 
     render() {
       return (
         <div className="tableBackground">
-            <TableCards
-            card1number={"10"}
-            card2number={"J"}
-            card3number={"Q"}
-            card4number={"K"}
-            card5number={"A"}
-            card1suit={"club"}
-            card2suit={"club"}
-            card3suit={"club"}
-            card4suit={"club"}
-            card5suit={"club"}
-            />
+            <TableCards flop={this.state.flop} boardState={boardState.flop}/>
             <div className="handLayer">
                 <div className="row">
-                    <Hand card1number={"4"} card1suit={"club"} card2number={"K"} card2suit={"heart"}/>
-                    <Hand card1number={"6"} card1suit={"diamond"} card2number={"2"} card2suit={"heart"}/>
-                    <Hand card1number={"6"} card1suit={"diamond"} card2number={"2"} card2suit={"heart"}/>
+                    { this.state.p1hand ? <Hand hand={this.state.p1hand} playerName="player" show={false}/> : <div className="emptyPlayer"/>}
+                    { this.state.p2hand ? <Hand hand={this.state.p2hand} playerName="player" show={false}/> : <div className="emptyPlayer"/>}
+                    { this.state.p3hand ? <Hand hand={this.state.p3hand} playerName="player" show={false}/> : <div className="emptyPlayer"/>}
                 </div>
 
                 <div className="row">
-                <Hand card1number={"6"} card1suit={"diamond"} card2number={"2"} card2suit={"heart"}/>
+                <Hand hand={temporaryHand} playerName="player" show={false}/>
                 <img className="image" src={TableImage} alt={"Table"}/>
-                <Hand card1number={"A"} card1suit={"spade"} card2number={"2"} card2suit={"heart"}/>
+                <Hand hand={temporaryHand} playerName="player" show={false}/>
                 </div>
 
                 <div className="row">
-                    <Hand card1number={"J"} card1suit={"club"} card2number={"2"} card2suit={"heart"} playerBet={200}/>
-                    <Hand card1number={"6"} card1suit={"diamond"} card2number={"2"} card2suit={"heart"}/>
-                    <Hand card1number={"6"} card1suit={"diamond"} card2number={"2"} card2suit={"heart"}/>
+                  <Hand hand={temporaryHand} playerName="player" show={false}/>
+                  <Hand hand={temporaryHand} playerName="player" show={true}/>
+                  <Hand hand={temporaryHand} playerName="player" show={false}/>
                 </div>
                 <Action/>
             </div>

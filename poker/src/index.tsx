@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Table from './components/table';
+import Table from './components/Table';
 
 ReactDOM.render(
   <React.StrictMode>

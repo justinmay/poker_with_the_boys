@@ -1,33 +1,36 @@
 import React from "react";
 import '../stylesheets/cards.css';
+import {hand} from '../interfaces';
+import {suits} from '../enums';
+import {getValueFromCardValueEnum} from '../helperFunctions';
 
 type HandProps = {
-    card1number: string;
-    card2number: string;
-    card1suit: string;
-    card2suit: string;
+    hand: hand;
+    playerName: string;
     playerBet?: number;
+    show: boolean;
 }
 
 function Hand(props: HandProps) {
+
     return (
         <div className="Player">
             <h1>
-                Player
+                {props.playerName}
             </h1>
             <div className="Hand">
                 <div className="Card">
-                    <p className={props.card1suit === "club" ? "black" : props.card1suit === "spade" ? "green" : props.card1suit === "heart" ? "red" : "blue"}>
-                    {props.card1number}{props.card1suit === "club" ? "♣️" : props.card1suit === "spade" ? "♠️" : props.card1suit === "heart" ? "♥" : "♦"}
-                    </p>
+                    {props.show ? <p className={props.hand.card1.suit === suits.Club ? "black" : props.hand.card1.suit === suits.Spade ? "green" : props.hand.card1.suit === suits.Heart ? "red" : "blue"}>
+                        {getValueFromCardValueEnum(props.hand.card1.value)}{props.hand.card1.suit === suits.Club ? "♣️" : props.hand.card1.suit === suits.Spade ? "♠️" : props.hand.card1.suit === suits.Heart ? "♥" : "♦"}
+                    </p> : null}
                 </div>
                 <div className="Card">
-                    <p className={props.card2suit === "club" ? "black" : props.card2suit === "spade" ? "green" : props.card2suit === "heart" ? "red" : "blue"}>
-                    {props.card2number}{props.card2suit === "club" ? "♣️" : props.card2suit === "spade" ? "♠️" : props.card2suit === "heart" ? "♥" : "♦"}
-                    </p>
+                    {props.show ? <p className={props.hand.card2.suit === suits.Club ? "black" : props.hand.card2.suit === suits.Spade ? "green" : props.hand.card2.suit === suits.Heart ? "red" : "blue"}>
+                        {getValueFromCardValueEnum(props.hand.card2.value)}{props.hand.card2.suit === suits.Club ? "♣️" : props.hand.card2.suit === suits.Spade ? "♠️" : props.hand.card2.suit === suits.Heart ? "♥" : "♦"}
+                    </p> : null }
                 </div>
             </div>
-            {props.playerBet! ?
+            {props.playerBet ?
             <div className="PlayerBet">
                 {props.playerBet!}
             </div>

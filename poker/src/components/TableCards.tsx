@@ -1,52 +1,59 @@
 import React from "react";
 import '../stylesheets/cards.css';
+import {suits, boardState} from '../enums';
+import {flop} from '../interfaces';
+import {getValueFromCardValueEnum} from '../helperFunctions';
 
 type HandProps = {
-    card1number: string;
-    card2number: string;
-    card3number: string;
-    card4number: string;
-    card5number: string;
-    card1suit: string;
-    card2suit: string;
-    card3suit: string;
-    card4suit: string;
-    card5suit: string;
-    playerBet?: number;
+    flop: flop,
+    boardState: boardState,
 }
 
 function TableCards(props: HandProps) {
     return (
         <div className="tableLayer">
             <div className="TablePot">
-                {props.playerBet!}
+                <h2>
+                    3000
+                </h2>
+                    
             </div>
             <div className="tableCards">
-                <div className="Card">
-                    <p className={props.card1suit === "club" ? "black" : props.card1suit === "spade" ? "green" : props.card1suit === "heart" ? "red" : "blue"}>
-                    {props.card1number}{props.card1suit === "club" ? "♣️" : props.card1suit === "spade" ? "♠️" : props.card1suit === "heart" ? "♥" : "♦"}
+                {
+                    props.boardState > 0 ? <div className="Card">
+                    <p className={props.flop.card1.suit === suits.Club ? "black" : props.flop.card1.suit === suits.Spade ? "green" : props.flop.card1.suit === suits.Heart ? "red" : "blue"}>
+                    {getValueFromCardValueEnum(props.flop.card1.value)}{props.flop.card1.suit === suits.Club ? "♣️" : props.flop.card1.suit === suits.Spade ? "♠️" : props.flop.card1.suit === suits.Heart ? "♥" : "♦"}
                     </p>
-                </div>
-                <div className="Card">
-                    <p className={props.card2suit === "club" ? "black" : props.card2suit === "spade" ? "green" : props.card2suit === "heart" ? "red" : "blue"}>
-                    {props.card2number}{props.card2suit === "club" ? "♣️" : props.card2suit === "spade" ? "♠️" : props.card2suit === "heart" ? "♥" : "♦"}
+                    </div> : null
+                }
+                {
+                    props.boardState > 0 ? <div className="Card">
+                    <p className={props.flop.card2.suit === suits.Club ? "black" : props.flop.card2.suit === suits.Spade ? "green" : props.flop.card2.suit === suits.Heart ? "red" : "blue"}>
+                    {getValueFromCardValueEnum(props.flop.card2.value)}{props.flop.card2.suit === suits.Club ? "♣️" : props.flop.card2.suit === suits.Spade ? "♠️" : props.flop.card2.suit === suits.Heart ? "♥" : "♦"}
                     </p>
-                </div>
-                <div className="Card">
-                    <p className={props.card3suit === "club" ? "black" : props.card3suit === "spade" ? "green" : props.card3suit === "heart" ? "red" : "blue"}>
-                    {props.card3number}{props.card3suit === "club" ? "♣️" : props.card3suit === "spade" ? "♠️" : props.card3suit === "heart" ? "♥" : "♦"}
+                </div>: null
+                }
+                {
+                    props.boardState > 0 ? <div className="Card">
+                    <p className={props.flop.card3.suit === suits.Club ? "black" : props.flop.card3.suit === suits.Spade ? "green" : props.flop.card3.suit === suits.Heart ? "red" : "blue"}>
+                    {getValueFromCardValueEnum(props.flop.card3.value)}{props.flop.card3.suit === suits.Club ? "♣️" : props.flop.card3.suit === suits.Spade ? "♠️" : props.flop.card3.suit === suits.Heart ? "♥" : "♦"}
                     </p>
-                </div>
-                <div className="Card">
-                    <p className={props.card4suit === "club" ? "black" : props.card4suit === "spade" ? "green" : props.card4suit === "heart" ? "red" : "blue"}>
-                    {props.card4number}{props.card4suit === "club" ? "♣️" : props.card4suit === "spade" ? "♠️" : props.card4suit === "heart" ? "♥" : "♦"}
+                </div>: null
+                }
+                {
+                    props.boardState > 1 ? <div className="Card">
+                    <p className={props.flop.card4.suit === suits.Club ? "black" : props.flop.card4.suit === suits.Spade ? "green" : props.flop.card4.suit === suits.Heart ? "red" : "blue"}>
+                    {getValueFromCardValueEnum(props.flop.card4.value)}{props.flop.card4.suit === suits.Club ? "♣️" : props.flop.card4.suit === suits.Spade ? "♠️" : props.flop.card4.suit === suits.Heart ? "♥" : "♦"}
                     </p>
-                </div>
-                <div className="Card">
-                    <p className={props.card5suit === "club" ? "black" : props.card5suit === "spade" ? "green" : props.card5suit === "heart" ? "red" : "blue"}>
-                    {props.card5number}{props.card5suit === "club" ? "♣️" : props.card5suit === "spade" ? "♠️" : props.card5suit === "heart" ? "♥" : "♦"}
+                </div>: null
+                }
+                {
+                    props.boardState > 2 ? <div className="Card">
+                    <p className={props.flop.card5.suit === suits.Club ? "black" : props.flop.card5.suit === suits.Spade ? "green" : props.flop.card5.suit === suits.Heart ? "red" : "blue"}>
+                    {getValueFromCardValueEnum(props.flop.card5.value)}{props.flop.card5.suit === suits.Club ? "♣️" : props.flop.card5.suit === suits.Spade ? "♠️" : props.flop.card5.suit === suits.Heart ? "♥" : "♦"}
                     </p>
-                </div>
+                </div>: null
+                }
             </div>
         </div>
     )

@@ -4,6 +4,10 @@
     width: 100vw;
 }
 
+.emptyPlayer {
+    width: 20vh;
+}
+
 .tableLayer {
     position: absolute;
     height: 25vh;

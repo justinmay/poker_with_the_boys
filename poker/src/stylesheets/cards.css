@@ -17,7 +17,7 @@ h1 {
     margin: 1vw;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .Card {
@@ -28,11 +28,13 @@ h1 {
     text-align: center;
     font-size: 3vh;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.349), 0 6px 20px 0 rgba(0, 0, 0, 0.616);
+    margin-left: .5vw;
+    margin-right: .5vw
 }
 
 .TablePot {
     position: absolute;
-    top: 10;
+    top: 3vh;
     background-color: rgb(255, 244, 147);
     color: black;
     width: 16vh;
@@ -40,12 +42,21 @@ h1 {
     font-size: 3vh;
     font-weight: bold;
     border-radius: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.TablePot > h2 {
+    margin: 0;
+    font-size: 3vh;
 }
 
 .Hand {
     height: 10vh;
     width: 18vh;
-    margin: 1vw;
+    margin: 1vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
