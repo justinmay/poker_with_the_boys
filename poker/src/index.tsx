@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 //import Table from './components/Table';
-import Login from './components/Login';
+//import Login from './components/Login';
+import AppRouter from './components/AppRouter';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    <AppRouter />
   </React.StrictMode>,
   document.getElementById('root')
 );
