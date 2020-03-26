@@ -1,101 +1,67 @@
-import React from "react";
+import React, {useState} from "react";
 import '../stylesheets/table.css';
 import TableImage from '../assets/poker_table.png';
 import Hand from './Hand';
+import {hand} from '../interfaces';
 import Action from './Action';
 import TableCards from './TableCards';
-import {hand, flop} from '../interfaces';
-import {suits, cardNumbers, boardState} from '../enums';
+import {boardState} from '../enums';
+import {getDefaultHand, getDefaultFlop} from '../helperFunctions';
+import SitDown from './SitDown';
 
   type TableProps = {
   };
 
-  type TableState = {
-    p1hand?: hand;
-    p2hand?: hand;
-    p3hand?: hand;
-    p4hand?: hand;
-    p5hand?: hand;
-    p6hand?: hand;
-    p7hand?: hand;
-    p8hand?: hand;
-    flop: flop;
-  };
+  export function Table(Props: TableProps) {
+    // eslint-disable-next-line
+    const [isSitting, setIsSitting] = useState(false); // eslint-disable-next-line
+    const [p1hand, setP1Hand] = useState(getDefaultHand());// eslint-disable-next-line
+    const [p2hand, setP2Hand] = useState(getDefaultHand());// eslint-disable-next-line
+    const [p3hand, setP3Hand] = useState(getDefaultHand());// eslint-disable-next-line
+    const [p4hand, setP4Hand] = useState(getDefaultHand());// eslint-disable-next-line
+    const [p5hand, setP5Hand] = useState(getDefaultHand());// eslint-disable-next-line
+    const [p6hand, setP6Hand] = useState(getDefaultHand());// eslint-disable-next-line
+    const [p7hand, setP7Hand] = useState();// eslint-disable-next-line
+    const [p8hand, setP8Hand] = useState();// eslint-disable-next-line
+    const [flop, setFlop] = useState(getDefaultFlop());
 
-  var temporaryHand: hand = {
-    card1: {
-      suit: suits.Club,
-      value: cardNumbers.six,
-    },
-    card2: {
-      suit: suits.Diamond,
-      value: cardNumbers.two,
+    function sitDown(seat: number) {
+      console.log(seat)
+      setIsSitting(true);
     }
-  }
-
-  var tempFlop: flop = {
-    card1: {
-      suit: suits.Club,
-      value: cardNumbers.six,
-    },
-    card2: {
-      suit: suits.Diamond,
-      value: cardNumbers.ace,
-    },
-    card3: {
-      suit: suits.Diamond,
-      value: cardNumbers.jack,
-    },
-    card4: {
-      suit: suits.Diamond,
-      value: cardNumbers.queen,
-    },
-    card5: {
-      suit: suits.Diamond,
-      value: cardNumbers.king
+    function player(hand: hand|undefined, seatNumber: number) {
+      if(isSitting) {
+        return hand ? <Hand hand={hand} playerName="player" show={true}/> : <div className="emptyPlayer"/>
+      } else {
+        return hand ? <Hand hand={hand} playerName="player" show={true}/> : <SitDown seatNumber={seatNumber} sitDown={(seatNumber: number) => sitDown(seatNumber)}/>
+      }
     }
-  }
 
-  class Table extends React.Component<TableProps, TableState> {
-    state: TableState = { 
-      p1hand: temporaryHand,
-      p2hand: undefined,
-      p3hand: temporaryHand,
-      p4hand: undefined,
-      p5hand: undefined,
-      p6hand: undefined,
-      p7hand: undefined,
-      p8hand: undefined,
-      flop: tempFlop,
-    };
-
-    render() {
-      return (
-        <div className="tableBackground">
-            <TableCards flop={this.state.flop} boardState={boardState.flop}/>
+    return(
+      <div className="tableBackground">
+            <TableCards flop={flop} boardState={boardState.flop}/>
             <div className="handLayer">
                 <div className="row">
-                    { this.state.p1hand ? <Hand hand={this.state.p1hand} playerName="player" show={false}/> : <div className="emptyPlayer"/>}
-                    { this.state.p2hand ? <Hand hand={this.state.p2hand} playerName="player" show={false}/> : <div className="emptyPlayer"/>}
-                    { this.state.p3hand ? <Hand hand={this.state.p3hand} playerName="player" show={false}/> : <div className="emptyPlayer"/>}
+                    { player(p1hand,1) }
+                    { player(p2hand,2) }
+                    { player(p3hand,3) }
                 </div>
 
                 <div className="row">
-                <Hand hand={temporaryHand} playerName="player" show={false}/>
-                <img className="image" src={TableImage} alt={"Table"}/>
-                <Hand hand={temporaryHand} playerName="player" show={false}/>
+                  { player(p4hand,4) }
+                  <img className="image" src={TableImage} alt={"Table"}/>
+                  { player(p5hand,5) }
                 </div>
 
                 <div className="row">
-                  <Hand hand={temporaryHand} playerName="player" show={true}/>
-                  <Hand hand={temporaryHand} playerName="player" show={true}/>
-                  <Hand hand={temporaryHand} playerName="player" show={false}/>
+                  { player(p6hand,6) }
+                  { player(p7hand,7) }
+                  { player(p8hand,8) }
                 </div>
                 <Action/>
             </div>
         </div>
-      );
-    }
+    )
   }
 
   export default Table;

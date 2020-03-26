@@ -4,12 +4,13 @@ import {Redirect} from "react-router-dom";
 import { useQuery } from '@apollo/react-hooks';
 import {usersQuery} from '../queries';
 import {Users, User} from '../interfaces';
+import Settings from '../settings';
 
 export function Login() {
     const { loading, error, data } = useQuery(usersQuery);
 
     if(loading) return <p>Loading...</p>; //TODO: make an actual loading screen
-    if(error) return <p>Error: {error}</p>; //TODO: make an actual error screen
+    if(!Settings.dev && error) return <p>Error</p>; //TODO: make an actual error screen
     console.log(data)
     const users: Users = data;
     return <LoginAfterData users={users}/>
@@ -28,7 +29,9 @@ export function LoginAfterData(Props: LoginAfterDataProps) { // replace with Log
 
     function login(e: any) {
         e.preventDefault();
-        if(showSignUpScreen) {
+        if(Settings.dev) {
+            setIsLoggedIn(true);
+        } else if(showSignUpScreen) {
             //TODO: sign up the user
         } else {
             // verify the user 
@@ -61,6 +64,7 @@ export function LoginAfterData(Props: LoginAfterDataProps) { // replace with Log
                 
                 <form onSubmit={event=>login(event)}>
                     {showInvalidUser ? <h2 className="loginInvalidUsername"> Invalid Username</h2> : null}
+                    {Settings.dev ? <h2 className="loginInvalidUsername"> Dev Mode - password Admin</h2> : null}
                     <input 
                     className="loginInput"
                     type="text" 

@@ -1,0 +1,11 @@
+.sitDownButton {
+    width: 16vh;
+    background-color: #ffffff86;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.sitDownButton:hover {
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.349), 0 6px 20px 0 rgba(255, 255, 255, 0.616);
+}

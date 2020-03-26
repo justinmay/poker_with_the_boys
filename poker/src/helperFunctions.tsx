@@ -1,3 +1,6 @@
+import {suits,cardNumbers} from "./enums";
+import {hand,flop} from './interfaces';
+
 export function getValueFromCardValueEnum(c: number) {
     switch(c) {
         case 0: 
@@ -29,4 +32,42 @@ export function getValueFromCardValueEnum(c: number) {
         default:
             return "joker"
     }
+}
+
+export function getDefaultHand():hand { 
+    return {
+    card1: {
+      suit: suits.Club,
+      value: cardNumbers.ace,
+    },
+    card2: {
+      suit: suits.Diamond,
+      value: cardNumbers.ace,
+    }
+  }
+}
+
+export function getDefaultFlop():flop {
+    return {
+        card1: {
+          suit: suits.Club,
+          value: cardNumbers.six,
+        },
+        card2: {
+          suit: suits.Diamond,
+          value: cardNumbers.ace,
+        },
+        card3: {
+          suit: suits.Diamond,
+          value: cardNumbers.jack,
+        },
+        card4: {
+          suit: suits.Diamond,
+          value: cardNumbers.queen,
+        },
+        card5: {
+          suit: suits.Diamond,
+          value: cardNumbers.king
+        }
+      }
 }

@@ -6,6 +6,10 @@
 
 .emptyPlayer {
     width: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .tableLayer {

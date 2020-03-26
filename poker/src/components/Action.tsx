@@ -1,37 +1,26 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import '../stylesheets/Action.css';
 
 type ActionProps = {
 };
-type ActionState = {
-  bet: number; // like this
-};
 
-class Action extends React.Component<ActionProps, ActionState> {
-    constructor(props: ActionProps) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-    }
-    state: ActionState = {
-        // optional second annotation for better type inference
-        bet: 0
-    };
+/**
+ * This funciton returns the action bar: TODO move the bet component to it's own component so it doesn't refresh the whole bar 
+ * @param Props props for Action bar
+ */
+export function Action(Props: ActionProps) {
+    const [bet, setBet] = useState("0");
 
-    handleChange(event: ChangeEvent<HTMLInputElement>) {
+    function handleChange(event: ChangeEvent<HTMLInputElement>) {
         let bet = event.target.value;
         if (bet.match(/^-{0,1}\d+$/)) {
-            this.setState({
-                bet: parseInt(bet)
-            })
+            setBet(bet);
         } else if (bet === "") {
-            this.setState({
-                bet: 0
-            })
+            setBet(bet);
         }
         
     }
 
-    render() {
     return (
         <div className="actionRow">
             <button className="actionButton greenBack">
@@ -79,11 +68,11 @@ class Action extends React.Component<ActionProps, ActionState> {
                     className="input yellowBack"
                     type="text" 
                     name="name" 
-                    value={this.state.bet} 
-                    onChange={this.handleChange}/>
+                    value={bet} 
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => handleChange(event)}/>
             </form>
         </div>
-    )}
+    )
 }
 
 export default Action
