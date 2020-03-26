@@ -1,138 +1,106 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import '../stylesheets/Login.css';
 import {Redirect} from "react-router-dom";
+import { useQuery } from '@apollo/react-hooks';
+import {usersQuery} from '../queries';
+import {Users, User} from '../interfaces';
 
-type LoginProps = {
+export function Login() {
+    const { loading, error, data } = useQuery(usersQuery);
+
+    if(loading) return <p>Loading...</p>; //TODO: make an actual loading screen
+    if(error) return <p>Error: {error}</p>; //TODO: make an actual error screen
+    console.log(data)
+    const users: Users = data;
+    return <LoginAfterData users={users}/>
+}
+
+type LoginAfterDataProps = {
+    users: Users;
 };
 
-type LoginState = {
-    username: string;
-    signUp: boolean;
-    venmo: string;
-    loggedIn: boolean;
-    showInvalidUser: boolean;
-};
+export function LoginAfterData(Props: LoginAfterDataProps) { // replace with Login 
+    const [username, setUsername] = useState("");
+    const [showSignUpScreen, setShowSignUpScreen] = useState(false);
+    const [venmo, setVenmo] = useState("");
+    const [showInvalidUser, setShowInvalidUser] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-class Login extends React.Component<LoginProps, LoginState> {
-    
-    constructor(props: LoginProps) {
-        super(props);
-        this.state = { 
-            username: "",
-            signUp: false,
-            venmo: "",
-            loggedIn: false,
-            showInvalidUser: false,
-        };
-
-        this.handleUsername = this.handleUsername.bind(this);
-        this.handleVenmo = this.handleVenmo.bind(this);
-        this.login = this.login.bind(this);
-    }
-
-    /**
-     * This method handles state changes for username from the venmo input 
-     * @param event the HTMLInputElement event from an input
-     */
-    handleUsername(event: ChangeEvent<HTMLInputElement>) {
-        this.setState({
-            username: event.target.value,
-        });
-    }
-
-    /**
-     * This method handles state changes for venmo from the venmo input
-     * @param event the HTMLInputElement event from an input
-     */
-    handleVenmo(event: ChangeEvent<HTMLInputElement>) {
-        this.setState({ 
-            venmo: event.target.value,
-        });
-    }
-
-    /**
-     * This method handles logging in and creating a user 
-     * TODO: hook up to server  
-     */
-    login(e: any) {
-        //this.state.venmo;
-        //this.state.signUp;
-        if(this.state.signUp) {
-            //TODO: handle signup 
+    function login(e: any) {
+        e.preventDefault();
+        if(showSignUpScreen) {
+            //TODO: sign up the user
         } else {
-            // Login 
-            if (this.state.username === "admin") { //TODO: replace with server username lookup
-                //TODO: route to table 
-                this.setState({
-                    loggedIn: true,
-                });
+            // verify the user 
+            const user = Props.users.users.find((user: User) => {
+                return user.username === username
+            })
+            if(user) {
+                //valid user login!
+                console.log("login!")
+                setIsLoggedIn(true);
             } else {
-                //login fails
-                this.setState({
-                    showInvalidUser: true,
-                });
-                console.log("invalid user")
-                e.preventDefault();
+                //invalid user
+                setShowInvalidUser(true);
             }
         }
     }
+    
 
-    render() {
-      return (
-          <div className="loginContainer">
-              {
-                  this.state.loggedIn ? <Redirect to="/poker" /> :
-              
-                <div className="loginContent">
-                    <div>
-                        <h1 className="loginHeader">Poker With The Boys</h1>
-                        <h1 className="loginSymbols">♤ ♡ ♢ ♧</h1>
-                        
-                    </div>
+    return (
+        <div className="loginContainer">
+          {
+              isLoggedIn ? <Redirect to="/poker" /> :
+          
+            <div className="loginContent">
+                <div>
+                    <h1 className="loginHeader">Poker With The Boys</h1>
+                    <h1 className="loginSymbols">♤ ♡ ♢ ♧</h1>
                     
-                    <form onSubmit={this.login}>
-                        {this.state.showInvalidUser ? <h2 className="loginInvalidUsername"> Invalid Username</h2> : null}
+                </div>
+                
+                <form onSubmit={event=>login(event)}>
+                    {showInvalidUser ? <h2 className="loginInvalidUsername"> Invalid Username</h2> : null}
+                    <input 
+                    className="loginInput"
+                    type="text" 
+                    name="name" 
+                    value={username} 
+                    placeholder={"username"}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}/>
+                </form>
+                
+                {
+                    showSignUpScreen ?
+                    <form onSubmit={() => "TODO"}>
                         <input 
                         className="loginInput"
                         type="text" 
                         name="name" 
-                        value={this.state.username} 
-                        placeholder={"username"}
-                        onChange={this.handleUsername}/>
+                        value={venmo} 
+                        placeholder={"venmo handle"}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => setVenmo(event.target.value)}/>
                     </form>
-                    
-                    {
-                        this.state.signUp ?
-                        <form onSubmit={this.login}>
-                            <input 
-                            className="loginInput"
-                            type="text" 
-                            name="name" 
-                            value={this.state.venmo} 
-                            placeholder={"venmo handle"}
-                            onChange={this.handleVenmo}/>
-                        </form>
-                        : null
-                    }
-                    <div className="loginButtonContainer">
-                        {
-                            this.state.signUp ? 
-                            <button className="loginButton" onClick={() => this.setState({signUp: false})}>
-                                Back
-                            </button> : 
-                            <button className="loginButton" onClick={this.login}>
-                                Login
-                            </button>
-                        }
-                        <button className="loginButton" onClick={() => this.setState({signUp: true})}>
-                            Sign Up
-                        </button>
-                    </div>
-                </div>
+                    : null
                 }
-          </div>
-      )
-    }
+                <div className="loginButtonContainer">
+                    {
+                        showSignUpScreen ? 
+                        <button className="loginButton" onClick={() => setShowSignUpScreen(false)}>
+                            Back
+                        </button> : 
+                        <button className="loginButton" onClick={event => login(event)}>
+                            Login
+                        </button>
+                    }
+                    <button className="loginButton" onClick={() => setShowSignUpScreen(true)}>
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+            }
+      </div>
+  )
 }
 
 export default Login;
