@@ -1,87 +1,109 @@
 import React, {ChangeEvent, useState} from "react";
 import '../stylesheets/Login.css';
 import {Redirect} from "react-router-dom";
-import { useQuery } from '@apollo/react-hooks';
-import {usersQuery} from '../queries';
-import {Users, User} from '../interfaces';
+import { useMutation} from '@apollo/react-hooks';
+import {signUpQuery, signInQuery} from '../queries';
 import Settings from '../settings';
-
-export function Login() {
-    const { loading, error, data } = useQuery(usersQuery);
-
-    if(loading) return <p>Loading...</p>; //TODO: make an actual loading screen
-    if(!Settings.dev && error) return <p>Error</p>; //TODO: make an actual error screen
-    console.log(data)
-    const users: Users = data;
-    return <LoginAfterData users={users}/>
-}
+import {AUTH_TOKEN} from '../constants';
 
 type LoginAfterDataProps = {
-    users: Users;
 };
 
-export function LoginAfterData(Props: LoginAfterDataProps) { // replace with Login 
+export function Login(Props: LoginAfterDataProps) { 
     const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [showSignUpScreen, setShowSignUpScreen] = useState(false);
     const [venmo, setVenmo] = useState("");
-    const [showInvalidUser, setShowInvalidUser] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);// eslint-disable-next-line
+    const [signUp, {  loading: signUpLoading, error: signUpError }] = useMutation(signUpQuery);// eslint-disable-next-line
+    const [signIn, { loading: signInLoading, error: signInError}] = useMutation(signInQuery, { errorPolicy: 'all' });
 
     function login(e: any) {
         e.preventDefault();
         if(Settings.dev) {
             setIsLoggedIn(true);
         } else if(showSignUpScreen) {
-            //TODO: sign up the user
+            handleSignUp(e)
         } else {
-            // verify the user 
-            const user = Props.users.users.find((user: User) => {
-                return user.username === username
-            })
-            if(user) {
-                //valid user login!
-                console.log("login!")
+            const values = {variables: {username, password}};
+            signIn(values).then( ({data}) => {
+                //getting the token 
+                _saveUserData(data.signIn.token);
                 setIsLoggedIn(true);
-            } else {
-                //invalid user
-                setShowInvalidUser(true);
-            }
+            }).catch(e => {
+                console.log(e);
+              });
         }
+    }
+
+    function _saveUserData(token: string) {
+        localStorage.setItem(AUTH_TOKEN, token);
+    }
+
+    function handleSignUp(e: any) { //todo: TEST THIS
+        e.preventDefault(); 
+        if(showSignUpScreen) {
+            const values = { variables: { username, password, venmo } }
+            signUp(values).then(({data}) => {
+                // saving user token to local storage
+                console.log(data)
+                _saveUserData(data.signUp.token);
+                setIsLoggedIn(true);
+            }).catch(e => {
+                console.log(e);
+            });
+        }
+        setShowSignUpScreen(true);
     }
     
 
     return (
         <div className="loginContainer">
           {
-              isLoggedIn ? <Redirect to="/poker" /> :
+              isLoggedIn ? <Redirect to={{
+                pathname: '/GameStart'
+            }} /> :
           
             <div className="loginContent">
                 <div>
                     <h1 className="loginHeader">Poker With The Boys</h1>
                     <h1 className="loginSymbols">♤ ♡ ♢ ♧</h1>
-                    
                 </div>
-                
+
                 <form onSubmit={event=>login(event)}>
-                    {showInvalidUser ? <h2 className="loginInvalidUsername"> Invalid Username</h2> : null}
                     {Settings.dev ? <h2 className="loginInvalidUsername"> Dev Mode - password Admin</h2> : null}
+                    {signInLoading || signUpLoading ? <h2 className="loginInvalidUsername"> Loading...</h2> : null}
+                    {signInError && !showSignUpScreen ? <h2 className="loginInvalidUsername"> {signInError.toString() === "Error: Network error: Failed to fetch" ? "Can't connect to server" : "Invalid Username or Password"} </h2> : null}
+                    {signUpError && showSignUpScreen ? <h2 className="loginInvalidUsername"> {signUpError.toString() === "Error: Network error: Failed to fetch" ? "Can't connect to server" : "Username already taken"} </h2> : null}
                     <input 
                     className="loginInput"
                     type="text" 
                     name="name" 
                     value={username} 
+                    autoComplete={"off"}
                     placeholder={"username"}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}/>
+                </form>
+
+                <form onSubmit={event=>login(event)}>
+                    <input 
+                    className="loginInput"
+                    type="password" 
+                    name="name" 
+                    value={password} 
+                    placeholder={"password"}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}/>
                 </form>
                 
                 {
                     showSignUpScreen ?
-                    <form onSubmit={() => "TODO"}>
+                    <form onSubmit={event=>login(event)}>
                         <input 
                         className="loginInput"
                         type="text" 
                         name="name" 
                         value={venmo} 
+                        autoComplete={"off"}
                         placeholder={"venmo handle"}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => setVenmo(event.target.value)}/>
                     </form>
@@ -90,14 +112,14 @@ export function LoginAfterData(Props: LoginAfterDataProps) { // replace with Log
                 <div className="loginButtonContainer">
                     {
                         showSignUpScreen ? 
-                        <button className="loginButton" onClick={() => setShowSignUpScreen(false)}>
+                        <button className="loginButton" onClick={() => {setShowSignUpScreen(false);}}>
                             Back
                         </button> : 
                         <button className="loginButton" onClick={event => login(event)}>
                             Login
                         </button>
                     }
-                    <button className="loginButton" onClick={() => setShowSignUpScreen(true)}>
+                    <button className="loginButton" onClick={event => handleSignUp(event)}>
                         Sign Up
                     </button>
                 </div>

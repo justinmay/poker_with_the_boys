@@ -1,0 +1,37 @@
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    background-color: rgba(80, 80, 80, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lessOpacity {
+    background-color: rgba(37, 37, 37, 1);
+    padding: 2vw;
+    justify-content: start;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.178), 0 6px 20px 0 rgba(0, 0, 0, 0.342);
+}
+
+.overlayButton {
+    width: 20vw;
+    margin-top: 5vh;
+}
+
+.overlayButton:hover{
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.466), 0 6px 20px 0 rgba(255, 255, 255, 0.445);
+}
+
+.overlayInput {
+    width: 20vw;
+    margin-top: 5vh;
+    border-color: rgba(214, 214, 214, 1);
+    border-width: 3px;
+    text-align: center;
+    color: white;
+}

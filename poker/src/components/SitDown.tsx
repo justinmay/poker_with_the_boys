@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import '../stylesheets/SitDown.css';
 
 type SitDownProps = {
@@ -7,9 +7,10 @@ type SitDownProps = {
 };
 
 export default function SitDown(Props: SitDownProps) {
+
     function handleClick() {
-        Props.sitDown(Props.seatNumber);
-        //TODO: send seat nubmer to server 
+        Props.sitDown(Props.seatNumber)
+        console.log("sitting down at seat ",Props.seatNumber);
     }
     return (
         <div className="emptyPlayer">

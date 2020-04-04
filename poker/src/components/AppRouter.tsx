@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Login from "./Login";
 import Table from "./Table";
+import GameStart from './GameStart';
 
 export default function AppRouter() {
   return (
@@ -15,9 +16,16 @@ export default function AppRouter() {
           <Route path="/poker">
             <Table />
           </Route>
+          <Route path="/GameStart">
+            <GameStart />
+          </Route>
+          <Route path="/Login">
+            <Login />
+          </Route>
           <Route path="/">
             <Login />
           </Route>
+          
         </Switch>
       </div>
     </Router>
