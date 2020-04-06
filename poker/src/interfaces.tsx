@@ -1,21 +1,11 @@
 import {suits, cardNumbers} from './enums';
 
-export interface card { 
-    suit: suits;
-    value: cardNumbers;
-}
-
-export interface hand {
-    card1: card;
-    card2: card;
-}
-
-export interface flop {
-    card1: card;
-    card2: card;
-    card3: card;
-    card4: card;
-    card5: card;
+export interface Flop {
+    card1?: Card;
+    card2?: Card;
+    card3?: Card;
+    card4?: Card;
+    card5?: Card;
 }
 
 export interface Users {
@@ -41,14 +31,35 @@ export interface Player {
     game: Game;
 }
 
+export interface SubscriptionPlayer {
+    stack: number;
+    user: {
+        username: string;
+    }
+    position: number;
+    showCards?: {
+        card1: {
+            suit: string
+            number: string
+        }
+        card2: {
+            suit: string
+            number: string
+        }
+    }
+    isFolded: boolean;
+    isAllIn: boolean;
+    betAmount: number;
+}
+
 export interface Hand {
     card1: Card;
     card2: Card;
 }
 
 export interface Card {
-    number: string;
-    suit: string;
+    number: cardNumbers;
+    suit: suits;
 }
 
 export interface Game {

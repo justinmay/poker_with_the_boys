@@ -16,6 +16,33 @@
     margin-right: .5vw;
 }
 
+.actionText { 
+    height: 8vh;
+}
+
+.betActionButton {
+    height: 3vh;
+    width: 5vh;
+    font-size: 1.2vh;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.betContainer {
+    display: flex;
+    height: 12vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.betActionButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: .5vw;
+    margin-right: .5vw;
+}
+
 .actionButton:hover {
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.507), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     color: white;

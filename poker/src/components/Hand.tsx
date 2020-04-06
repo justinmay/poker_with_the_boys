@@ -1,38 +1,38 @@
 import React from "react";
 import '../stylesheets/cards.css';
-import {hand} from '../interfaces';
-import {suits} from '../enums';
-import {getValueFromCardValueEnum} from '../helperFunctions';
+import {SubscriptionPlayer} from '../interfaces';
 
 type HandProps = {
-    hand: hand;
-    playerName: string;
-    playerBet?: number;
-    show: boolean;
+    playerInfo: SubscriptionPlayer,
+    isDealer: boolean,
+    actionPosition: number
 }
 
-function Hand(props: HandProps) {
+function HandComponent(props: HandProps) {
 
     return (
         <div className="Player">
-            <h1>
-                {props.playerName}
+            <h1 className={props.isDealer ? "dealer" : "notDealer"}>
+                {props.playerInfo.user.username}
             </h1>
-            <div className="Hand">
-                <div className="Card">
-                    {props.show ? <p className={props.hand.card1.suit === suits.Club ? "black" : props.hand.card1.suit === suits.Spade ? "green" : props.hand.card1.suit === suits.Heart ? "red" : "blue"}>
-                        {getValueFromCardValueEnum(props.hand.card1.value)}{props.hand.card1.suit === suits.Club ? "♣️" : props.hand.card1.suit === suits.Spade ? "♠️" : props.hand.card1.suit === suits.Heart ? "♥" : "♦"}
+            <div className={props.actionPosition && props.actionPosition === props.playerInfo.position ? "ActionHand":"Hand"}>
+                <div className={props.playerInfo.isFolded ? "Folded" : "Card"}>
+                    {props.playerInfo.showCards ? <p className={props.playerInfo.showCards.card1.suit === "c" ? "black" : props.playerInfo.showCards.card1.suit === "s" ? "green" : props.playerInfo.showCards.card1.suit === "h" ? "red" : "blue"}>
+                        {props.playerInfo.showCards.card1.number}{props.playerInfo.showCards.card1.suit === "c" ? "♣️" : props.playerInfo.showCards.card1.suit === "s" ? "♠️" : props.playerInfo.showCards.card1.suit === "h" ? "♥" : "♦"}
                     </p> : null}
                 </div>
-                <div className="Card">
-                    {props.show ? <p className={props.hand.card2.suit === suits.Club ? "black" : props.hand.card2.suit === suits.Spade ? "green" : props.hand.card2.suit === suits.Heart ? "red" : "blue"}>
-                        {getValueFromCardValueEnum(props.hand.card2.value)}{props.hand.card2.suit === suits.Club ? "♣️" : props.hand.card2.suit === suits.Spade ? "♠️" : props.hand.card2.suit === suits.Heart ? "♥" : "♦"}
+                <div className={props.playerInfo.isFolded ? "Folded" : "Card"}>
+                    {props.playerInfo.showCards ? <p className={props.playerInfo.showCards.card2.suit === "c" ? "black" : props.playerInfo.showCards.card2.suit === "s" ? "green" : props.playerInfo.showCards.card2.suit === "h" ? "red"  : "blue"}>
+                        {props.playerInfo.showCards.card2.number}{props.playerInfo.showCards.card2.suit === "c" ? "♣️" : props.playerInfo.showCards.card2.suit === "s" ? "♠️" : props.playerInfo.showCards.card2.suit === "h" ? "♥" : "♦"}
                     </p> : null }
                 </div>
             </div>
-            {props.playerBet ?
+            <div className="playerStack">
+                {props.playerInfo.stack}
+            </div>
+            {props.playerInfo.betAmount > 0 ?
             <div className="PlayerBet">
-                {props.playerBet!}
+                {props.playerInfo.betAmount}
             </div>
             : null}
             
@@ -40,4 +40,4 @@ function Hand(props: HandProps) {
     );
   }
 
-  export default Hand;
+  export default HandComponent;

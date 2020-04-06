@@ -29,6 +29,7 @@ export function Login(Props: LoginAfterDataProps) {
             signIn(values).then( ({data}) => {
                 //getting the token 
                 _saveUserData(data.signIn.token);
+                console.log("token",data.signIn.token);
                 setIsLoggedIn(true);
             }).catch(e => {
                 console.log(e);

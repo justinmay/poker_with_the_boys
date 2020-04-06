@@ -1,5 +1,6 @@
-import {suits,cardNumbers} from "./enums";
-import {hand,flop} from './interfaces';
+
+import {suits, cardNumbers} from './enums';
+import {Card} from './interfaces';
 
 export function getValueFromCardValueEnum(c: number) {
     switch(c) {
@@ -34,40 +35,58 @@ export function getValueFromCardValueEnum(c: number) {
     }
 }
 
-export function getDefaultHand():hand { 
-    return {
-    card1: {
-      suit: suits.Club,
-      value: cardNumbers.ace,
-    },
-    card2: {
-      suit: suits.Diamond,
-      value: cardNumbers.ace,
-    }
+export function getCardNumberEnumFromString(s: string) {
+  switch(s) {
+    case "A": 
+        return cardNumbers.ace
+    case "2":
+        return cardNumbers.two
+    case "3": 
+        return cardNumbers.three
+    case "4": 
+        return cardNumbers.four
+    case "5":
+        return cardNumbers.five
+    case "6":
+        return cardNumbers.six
+    case "7":
+        return cardNumbers.seven
+    case "8":
+        return cardNumbers.eight
+    case "9":
+        return cardNumbers.nine
+    case "T":
+        return cardNumbers.ten
+    case "J":
+        return cardNumbers.jack
+    case "Q":
+        return cardNumbers.queen
+    case "K":
+        return cardNumbers.king
+    default:
+      return cardNumbers.ace
   }
 }
 
-export function getDefaultFlop():flop {
-    return {
-        card1: {
-          suit: suits.Club,
-          value: cardNumbers.six,
-        },
-        card2: {
-          suit: suits.Diamond,
-          value: cardNumbers.ace,
-        },
-        card3: {
-          suit: suits.Diamond,
-          value: cardNumbers.jack,
-        },
-        card4: {
-          suit: suits.Diamond,
-          value: cardNumbers.queen,
-        },
-        card5: {
-          suit: suits.Diamond,
-          value: cardNumbers.king
-        }
-      }
+export function getSuitEnumFromString(s: string) {
+  switch(s) {
+    case "s":
+      return suits.Spade
+    case "d":
+      return suits.Diamond
+    case "h":
+      return suits.Heart
+    case "c":
+      return suits.Club
+    default:
+      return suits.Spade
+  }
+}
+
+export function getCardFromSubscriptionCard(card: any) {
+  const ret: Card = {
+    number: getCardNumberEnumFromString(card.number),
+    suit: getSuitEnumFromString(card.suit)
+  }
+  return ret
 }

@@ -5,10 +5,16 @@
     width: 100vw;
     height: 100vh;
     z-index: 10;
-    background-color: rgba(80, 80, 80, 1);
+    background-color: rgba(80, 80, 80, 0.363);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.settingsFields {
+    text-align: center;
+    margin: 0px;
+    color: rgb(255, 255, 255);
 }
 
 .lessOpacity {

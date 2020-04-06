@@ -37,12 +37,7 @@ export const joinGameQuery = gql `
 mutation joinGame($gameId: ID!) {
   joinGame(
     gameId: $gameId
-) {
-  players {
-    position
-  }
-
-}
+  )
 }
 `;
 
@@ -64,13 +59,68 @@ subscription change($gameId: ID!) {
     }
     state
     action
+    curBet
     players {
       stack
+      user {
+        username
+      }
+      showCards {
+        card1 {
+          suit
+          number
+        }
+        card2 {
+          suit
+          number
+        }
+      }
       position
       isFolded
       isAllIn
       betAmount
     }
+  }
+}
+`
+
+export const betMutation = gql`
+mutation bet($amount: Int!, $gameId: ID!) {
+  bet(
+    amount: $amount,
+    gameId: $gameId
+)
+}
+`
+
+export const foldMutaiton = gql`
+mutation fold($gameId: ID!) {
+  fold(
+    gameId: $gameId
+)
+}
+`
+
+export const allInMutation = gql`
+mutation allIn($gameId: ID!) {
+  allIn(
+    gameId: $gameId
+)
+}
+`
+
+export const getDataQuery = gql`
+query getData($gameId: ID!) {
+  getData(
+    gameId: $gameId
+  )
+}
+`
+export const getMe = gql`
+{
+  me {
+    username
+    venmo
   }
 }
 `

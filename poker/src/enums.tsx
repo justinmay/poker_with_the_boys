@@ -20,10 +20,3 @@ export enum cardNumbers {
    queen,
    king,
 }
-
-export enum boardState{
-    preflop,
-    flop,
-    turn,
-    river,
-}
