@@ -1,5 +1,5 @@
 export default class Settings {
-    static dev = true;
+    static dev = false;
     static code = "30a468cd";
     static mode = "ngrok"
     static heroku_uri = "poker-graphql-backend.herokuapp.com/graphql"
