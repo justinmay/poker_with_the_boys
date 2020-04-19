@@ -1,0 +1,141 @@
+.Player {
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 3vh;
+}
+
+.dealer {
+    color: #00D8D8
+}
+
+.tableCards {
+    height: 10vh;
+    width: 45vh;
+    margin: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Card {
+    height: 10vh;
+    width: 8vh;
+    background-color: #FFFCF9;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 3vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.349), 0 6px 20px 0 rgba(0, 0, 0, 0.616);
+    margin-left: .5vw;
+    margin-right: .5vw
+}
+
+.Folded {
+    height: 10vh;
+    width: 8vh;
+    background-color: rgb(56, 56, 56);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 3vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.349), 0 6px 20px 0 rgba(0, 0, 0, 0.616);
+    margin-left: .5vw;
+    margin-right: .5vw
+}
+
+.TablePot {
+    position: absolute;
+    top: 3vh;
+    background-color: rgb(255, 244, 147);
+    color: black;
+    width: 16vh;
+    height: 4vh;
+    font-size: 3vh;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.TablePot > h2 {
+    margin: 0;
+    font-size: 3vh;
+}
+
+.Hand {
+    height: 10vh;
+    width: 18vh;
+    margin: 1vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ActionHand {
+    height: 10vh;
+    width: 18vh;
+    margin: 1vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ActionHand > .Card {
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.753), 0 6px 20px 0 rgba(255, 255, 255, 0.719);
+}
+
+.GoldenCards {
+    height: 10vh;
+    width: 18vh;
+    margin: 1vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.GoldenCards > .Card {
+    box-shadow: 0 4px 8px 0 rgba(247, 190, 4, 0.849), 0 6px 20px 0 rgba(247, 190, 4, 0.849);
+}
+
+.PlayerBet {
+    background-color: rgb(255, 244, 147);
+    color: black;
+    width: 16vh;
+    height: 4vh;
+    font-size: 3vh;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.playerStack {
+    background-color: #FFFCF9;
+    color: black;
+    width: 16vh;
+    height: 4vh;
+    font-size: 3vh;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.red {
+    color: #FF6978;
+}
+
+.blue {
+    color: #3BB5F7;
+}
+
+.black {
+    color: #2F4858;
+}
+
+.green {
+    color: #00D8D8;
+}

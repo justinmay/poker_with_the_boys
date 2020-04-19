@@ -1,0 +1,71 @@
+.tableBackground {
+    background-color: #141F26;
+    height: 100vh;
+    width: 100vw;
+}
+
+.emptyPlayer {
+    width: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableLayer {
+    position: absolute;
+    height: 25vh;
+    width: 50vw;
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 25vh;
+    left: 25vw;
+}
+
+.image {
+    width: 60vh;
+}
+
+.handLayer {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    height: 25vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.settingToggleContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12vh;
+    height: 6vh;
+    z-index: 15;
+    background-color: clear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settingsButtom {
+    height: 4vh;
+    width: 10vh;
+    font-size: 2vh;
+    text-align: center;
+    background-color: #ffffff9c;
+    border-width: 0px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
