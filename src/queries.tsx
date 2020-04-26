@@ -27,8 +27,8 @@ mutation signIn($username: String!, $password: String!) {
 export const createGameMutation = gql `
 mutation createGame($BB: Int!, $SB: Int!) {
   createGame(
-    sBlind: $BB,
-    bBlind: $SB
+    sBlind: $SB,
+    bBlind: $BB
 )
 }
 `;
@@ -146,5 +146,24 @@ export const getMe = gql`
     username
     venmo
   }
+}
+`
+
+export const addToStackMutation = gql `
+mutation addToStack($position: Int!, $amount: Int!, $gameId: ID!) {
+  addToStack(
+    position: $position,
+    amount: $amount,
+    gameId: $gameId
+)
+}
+`
+
+export const removePlayer = gql`
+mutation removePlayer($position: Int!, $gameId: ID!) {
+  removePlayer(
+    position: $amount,
+    gameId: $gameId
+)
 }
 `

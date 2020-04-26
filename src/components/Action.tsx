@@ -18,7 +18,7 @@ type ActionProps = {
  */
 export function Action(props: ActionProps) {
     const [betAmount, setBetAmount] = useState("0");
-    const [bet, {loading: betLoading, error: betError}] = useMutation(betMutation);
+    const [bet] = useMutation(betMutation);
     const [fold] = useMutation(foldMutaiton);
     const [allIn] = useMutation(allInMutation);
 
@@ -48,7 +48,8 @@ export function Action(props: ActionProps) {
         if (+betAmount === props.me.stack) {
             //if all in
             handleAllIn();
-        } else {
+            setBetAmount("0");
+        } else if (+betAmount > 0){
             console.log("bet ", betAmount)
             const values = { variables: { gameId: props.gameId, amount: +betAmount} }
             bet(values)
@@ -56,7 +57,7 @@ export function Action(props: ActionProps) {
             .catch(e => {
                 console.log(e);
             });
-            
+            setBetAmount("0");
         }
     }
 
@@ -65,6 +66,7 @@ export function Action(props: ActionProps) {
             console.log("check")
             const values = { variables: { gameId: props.gameId, amount: 0} }
             bet(values);
+            setBetAmount("0");
         }
         
     }
@@ -80,6 +82,7 @@ export function Action(props: ActionProps) {
                 const values = { variables: { gameId: props.gameId, amount: amount} };
                 bet(values);
             }
+            setBetAmount("0");
         }
     }
 
@@ -88,6 +91,7 @@ export function Action(props: ActionProps) {
             console.log("fold")
             const values = { variables: { gameId: props.gameId} }
             fold(values);
+            setBetAmount("0");
         }
     }
 

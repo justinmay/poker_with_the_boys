@@ -5,8 +5,9 @@ import {SubscriptionPlayer} from '../interfaces';
 type HandProps = {
     playerInfo: SubscriptionPlayer,
     isDealer: boolean,
-    actionPosition: number,
+    isActionOnPlayer: boolean,
     hasStarted: boolean, 
+    isWinner: boolean,
 }
 
 function HandComponent(props: HandProps) {
@@ -17,7 +18,7 @@ function HandComponent(props: HandProps) {
             </h1>
             {
                 props.hasStarted ? 
-                <div className={ props.playerInfo.showCards ? "GoldenCards" : props.actionPosition === props.playerInfo.position ? "ActionHand" : "Hand"}>
+                <div className={ props.isWinner ? "GoldenCards" : props.isActionOnPlayer ? "ActionHand" : "Hand"}>
                     <div className={props.playerInfo.isFolded ? "Folded" : "Card"}>
                         {props.playerInfo.showCards ? <p className={props.playerInfo.showCards.card1.suit === "c" ? "black" : props.playerInfo.showCards.card1.suit === "s" ? "green" : props.playerInfo.showCards.card1.suit === "h" ? "red" : "blue"}>
                             {props.playerInfo.showCards.card1.number}{props.playerInfo.showCards.card1.suit === "c" ? "♣️" : props.playerInfo.showCards.card1.suit === "s" ? "♠️" : props.playerInfo.showCards.card1.suit === "h" ? "♥" : "♦"}

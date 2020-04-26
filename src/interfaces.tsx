@@ -74,3 +74,18 @@ export interface Game {
     curBet: number;
     action: number;
 }
+
+export interface subscriptionData {
+    potSize: number,
+    dealer: number,
+    winner: number,
+    numPlayers: number,
+    table: {
+        number: number,
+        suit: string,
+    }[],
+    state: string,
+    action: number,
+    curBet: number,
+    players: SubscriptionPlayer[]
+}

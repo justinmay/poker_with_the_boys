@@ -5,7 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import Login from "./Login";
-import Table from "./Table";
+import Table from './TableSubscriptionLayer';
 import GameStart from './GameStart';
 
 export default function AppRouter() {

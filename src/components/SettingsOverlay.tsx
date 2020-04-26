@@ -1,6 +1,6 @@
 import React, {useState, ChangeEvent} from "react";
 import '../stylesheets/GameStart.css';
-import {createPlayerQuery, startGameMutation} from '../queries';
+import {createPlayerQuery, startGameMutation, addToStackMutation} from '../queries';
 import { useMutation } from "@apollo/react-hooks";
 import Settings from '../settings';
 
@@ -11,12 +11,15 @@ type SettingsOverlayProps = {
     hasBoughtIn: boolean;
     setHasBoughtInTrue: () => void;
     setHasStarted:() => void;
+    shouldShowStartGame: boolean;
+    bigBlindSize: number;
 };
 
 export default function SettingsOverlay(props: SettingsOverlayProps) {
 
     const [createPlayer, {loading: createPlayerLoading, error: createPlayerError}] = useMutation(createPlayerQuery);
     const [startGameMut, {loading: startGameLoading, error: startGameError}] = useMutation(startGameMutation);
+    const [buyBackInMut] = useMutation(addToStackMutation);
     const [invalidBuyin, setInvalidBuyin] = useState(false);
     const [buyIn, setBuyIn] = useState("");
 
@@ -52,7 +55,14 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     }
 
     function handleBuyMore(amount: number) {
-
+        const values = { variables: { amount: amount, position: props.position, gameId: props.gameId } }
+        buyBackInMut(values).then(({data}) => {
+            console.log(data);
+            props.showSettingsOverlay();
+            props.setHasBoughtInTrue();
+        }).catch(e => {
+            console.log(e);
+        });
     }
 
     function startGame() {
@@ -74,13 +84,17 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
                     {startGameLoading && <h2 className="loginInvalidUsername"> Creating Game...</h2>}
                     {startGameError && <h2 className="loginInvalidUsername"> Error creating game</h2>}
                     <h3 className="settingsFields">gameid: {props.gameId}</h3>
-                    <button className="loginButton overlayButton" onClick={() => startGame()}>
-                        Start Game
-                    </button>
-                    <button className="loginButton overlayButton" onClick={() => handBuyIn()}>
+                    {
+                        props.shouldShowStartGame ? 
+                        <button className="loginButton overlayButton" onClick={() => startGame()}>
+                            Start Game
+                        </button> : 
+                        null
+                    }
+                    <button className="loginButton overlayButton" onClick={() => handleBuyMore(50)}>
                         Buy 50 BB
                     </button>
-                    <button className="loginButton overlayButton" onClick={() => handBuyIn()}>
+                    <button className="loginButton overlayButton" onClick={() => handleBuyMore(100)}>
                         Buy 100 BB
                     </button>
                 </div> :

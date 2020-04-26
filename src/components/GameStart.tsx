@@ -25,13 +25,15 @@ export default function GameStart(Props: GameStartProps) {
             return;
         }
         if (startGameWorkflow) {
-            if (+bigBlind === 0 || +smallBlind === 0) {
+            if (+bigBlind === 0 || +smallBlind === 0 || +bigBlind < +smallBlind) {
                 setNotValidBlinds(true);
                 return;
             } else {
                 setNotValidBlinds(false);
             }
             const values = { variables: { BB: +bigBlind, SB: +smallBlind} };
+            console.log(bigBlind, "bigBlind");
+            console.log(smallBlind, "smallBlind");
             createGame(values).then(e => {
                 console.log(e.data.createGame);
                 setGameId(e.data.createGame);
