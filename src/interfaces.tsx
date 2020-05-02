@@ -40,11 +40,11 @@ export interface SubscriptionPlayer {
     showCards?: {
         card1: {
             suit: string
-            number: string
+            value: string
         }
         card2: {
             suit: string
-            number: string
+            value: string
         }
     }
     isFolded: boolean;
@@ -58,7 +58,7 @@ export interface Hand {
 }
 
 export interface Card {
-    number: cardNumbers;
+    value: cardNumbers;
     suit: suits;
 }
 
@@ -80,10 +80,10 @@ export interface subscriptionData {
     bigBlind: number,
     smallBlind: number,
     dealer: number,
-    winner: number,
+    winners: [number],
     numPlayers: number,
     table: {
-        number: number,
+        value: number,
         suit: string,
     }[],
     state: string,

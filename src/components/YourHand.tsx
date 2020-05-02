@@ -24,12 +24,12 @@ function YourHandComponent(props: HandProps) {
                 <div className={ props.isWinner ? "GoldenCards" : props.isActionOnPlayer ? "ActionHand" : "Hand"}>
                     <div className={props.playerInfo.isFolded ? "Folded" : "Card"}>
                         <p className={props.hand.card1.suit === suits.Club ? "black" : props.hand.card1.suit === suits.Spade ? "green" : props.hand.card1.suit === suits.Heart ? "red" : "blue"}>
-                            {getValueFromCardValueEnum(props.hand.card1.number)}{props.hand.card1.suit === suits.Club ? "♣️" : props.hand.card1.suit === suits.Spade ? "♠️" : props.hand.card1.suit === suits.Heart ? "♥" : "♦"}
+                            {getValueFromCardValueEnum(props.hand.card1.value)}{props.hand.card1.suit === suits.Club ? "♣️" : props.hand.card1.suit === suits.Spade ? "♠️" : props.hand.card1.suit === suits.Heart ? "♥" : "♦"}
                         </p> 
                     </div>
                     <div className={props.playerInfo.isFolded ? "Folded" : "Card"}>
                         <p className={props.hand.card2.suit === suits.Club ? "black" : props.hand.card2.suit === suits.Spade ? "green" : props.hand.card2.suit === suits.Heart ? "red"  : "blue"}>
-                            {getValueFromCardValueEnum(props.hand.card2.number)}{props.hand.card2.suit === suits.Club ? "♣️" : props.hand.card2.suit === suits.Spade ? "♠️" : props.hand.card2.suit === suits.Heart ? "♥" : "♦"}
+                            {getValueFromCardValueEnum(props.hand.card2.value)}{props.hand.card2.suit === suits.Club ? "♣️" : props.hand.card2.suit === suits.Spade ? "♠️" : props.hand.card2.suit === suits.Heart ? "♥" : "♦"}
                         </p>  
                     </div>
                 </div>:

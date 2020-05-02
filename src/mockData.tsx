@@ -15,12 +15,12 @@ export const mockSubscriptionData = {
 }
 
 export const mockAceClubCard: Card = {
-    number: cardNumbers.ace,
+    value: cardNumbers.ace,
     suit: suits.Club
 }
 
 export const mockAceSpadeCard: Card = {
-    number: cardNumbers.ace,
+    value: cardNumbers.ace,
     suit: suits.Spade
 }
 

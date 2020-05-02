@@ -59,11 +59,11 @@ mutation player($position: Int!, $gameId: ID!) {
     hand {
       card1 {
         suit
-        number
+        value
       }
       card2 {
         suit
-        number
+        value
       }
     }
   }
@@ -77,10 +77,10 @@ subscription change($gameId: ID!) {
     dealer
     bigBlind
     smallBlind
-    winner
+    winners
     numPlayers
     table {
-      number
+      value
       suit
     }
     state
@@ -94,11 +94,11 @@ subscription change($gameId: ID!) {
       showCards {
         card1 {
           suit
-          number
+          value
         }
         card2 {
           suit
-          number
+          value
         }
       }
       position

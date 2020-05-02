@@ -85,7 +85,7 @@ export function getSuitEnumFromString(s: string) {
 
 export function getCardFromSubscriptionCard(card: any) {
   const ret: Card = {
-    number: getCardNumberEnumFromString(card.number),
+    value: getCardNumberEnumFromString(card.value),
     suit: getSuitEnumFromString(card.suit)
   }
   return ret

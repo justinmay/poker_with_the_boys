@@ -110,11 +110,11 @@ import {mockHand} from '../mockData';
             // saving user token to local storage
             setCurrentHand({
               card1: {
-                number: getCardNumberEnumFromString(data.player.hand.card1.number),
+                value: getCardNumberEnumFromString(data.player.hand.card1.value),
                 suit: getSuitEnumFromString(data.player.hand.card1.suit)
               },
               card2: {
-                number: getCardNumberEnumFromString(data.player.hand.card2.number),
+                value: getCardNumberEnumFromString(data.player.hand.card2.value),
                 suit: getSuitEnumFromString(data.player.hand.card2.suit)
               }
             })
@@ -144,7 +144,7 @@ import {mockHand} from '../mockData';
           isActionOnPlayer={data && data.action !== undefined ? data.action === playerInfo.position : false} 
           isDealer={data ? playerInfo.position === data.dealer : false} 
           playerInfo={playerInfo}
-          isWinner={data ? data.winner === playerInfo.position : false}
+          isWinner={data ? data.winners.includes(playerInfo.position)  : false}
           /> : <div className="emptyPlayer"/>
       } else {
         return playerInfo ? <HandComponent 
@@ -152,7 +152,7 @@ import {mockHand} from '../mockData';
           isActionOnPlayer={data && data.action !== undefined ? data.action === playerInfo.position : false} 
           isDealer={data ? playerInfo.position === data.dealer : false} 
           playerInfo={playerInfo}
-          isWinner={data ? data.winner === playerInfo.position : false}/> : 
+          isWinner={data ? data.winners.includes(playerInfo.position) : false}/> : 
           <SitDown seatNumber={seatPosition} sitDown={(seatPosition: number) => sitDown(seatPosition)}/>
       }
     }
@@ -166,7 +166,7 @@ import {mockHand} from '../mockData';
           isActionOnPlayer={data && data.action !== undefined ? data.action === playerInfo.position : false} 
           isDealer={data ? playerInfo.position === data.dealer : false} 
           playerInfo={playerInfo}
-          isWinner={data ? data.winner === playerInfo.position : false}/> : 
+          isWinner={data ? data.winners.includes(playerInfo.position) : false}/> : 
           <div className="emptyPlayer"/>
       } else {
         return playerInfo ? <HandComponent  
@@ -174,7 +174,7 @@ import {mockHand} from '../mockData';
           isActionOnPlayer={data && data.action !== undefined ? data.action === playerInfo.position : false} 
           isDealer={data ? playerInfo.position === data.dealer : false} 
           playerInfo={playerInfo}
-          isWinner={data ? data.winner === playerInfo.position : false}/> : 
+          isWinner={data ? data.winners.includes(playerInfo.position) : false}/> : 
           <SitDown seatNumber={seatPosition} sitDown={(seatPosition: number) => sitDown(seatPosition)}/>
       }
     }
