@@ -22,7 +22,7 @@ function HandComponent(props: HandProps) {
                 <div className={ props.isWinner ? "GoldenCards" : props.isActionOnPlayer ? "ActionHand" : "Hand"}>
                     <div className={props.playerInfo.isFolded ? "Folded" : "Card"}>
                         {props.playerInfo.showCards ? <p className={props.playerInfo.showCards.card1.suit === "c" ? "black" : props.playerInfo.showCards.card1.suit === "s" ? "green" : props.playerInfo.showCards.card1.suit === "h" ? "red" : "blue"}>
-                            {props.playerInfo.showCards.card2.value}{props.playerInfo.showCards.card1.suit === "c" ? "♣️" : props.playerInfo.showCards.card1.suit === "s" ? "♠️" : props.playerInfo.showCards.card1.suit === "h" ? "♥" : "♦"}
+                            {props.playerInfo.showCards.card1.value}{props.playerInfo.showCards.card1.suit === "c" ? "♣️" : props.playerInfo.showCards.card1.suit === "s" ? "♠️" : props.playerInfo.showCards.card1.suit === "h" ? "♥" : "♦"}
                         </p> : null}
                     </div>
                     <div className={props.playerInfo.isFolded ? "Folded" : "Card"}>
