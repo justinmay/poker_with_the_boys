@@ -77,6 +77,8 @@ export interface Game {
 
 export interface subscriptionData {
     potSize: number,
+    bigBlind: number,
+    smallBlind: number,
     dealer: number,
     winner: number,
     numPlayers: number,

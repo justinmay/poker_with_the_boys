@@ -75,6 +75,8 @@ subscription change($gameId: ID!) {
   change(gameId: $gameId){
     potSize
     dealer
+    bigBlind
+    smallBlind
     winner
     numPlayers
     table {

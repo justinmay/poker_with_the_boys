@@ -31,8 +31,8 @@ import {mockHand} from '../mockData';
     let username = "";
     let venmo = "";
     if (meData) {
-      username = meData.me.username;
-      venmo = meData.me.venmo;
+      username = meData.me ? meData.me.username : "";
+      venmo = meData.me ? meData.me.venmo: "";
     }
     if (data) {
       me = data.players.find((player: SubscriptionPlayer) => {return player.user.username === username})//find the current player in the game
@@ -188,7 +188,7 @@ import {mockHand} from '../mockData';
           hasBoughtIn={hasBoughtIn}
           setHasBoughtInTrue={() => setHasBoughtIn(true)}
           position={seatNumber}
-          bigBlindSize={10}
+          bigBlindSize={data ? data.bigBlind : 0}
           shouldShowStartGame={data ? data.players.length > 1: false}/> 
           : null}
         {isSitting && 
@@ -217,7 +217,12 @@ import {mockHand} from '../mockData';
             { player(player7,7) }
           </div>
           <TableCards flop={flop} potSize={data ? data.potSize: 0}/>
-        <Action currBet={data ? data.curBet : 0} me={me!} gameId={location.state.gameId} pot={data ? data.potSize: 0} canBet={data ? data.action===me?.position : 0===me?.position}/>
+        <Action currBet={data ? data.curBet : 0} 
+        me={me!} gameId={location.state.gameId} 
+        pot={data ? data.potSize: 0} 
+        actionIsOnYou={data ? data.action===me?.position : 0===me?.position}
+        isFolded={false}
+        hasStarted={hasStarted}/>
         </div>
       </div>
     )

@@ -104,17 +104,6 @@ export default function GameStart(Props: GameStartProps) {
                 {
                     startGameWorkflow ? 
                     <div>
-                        
-                        <form onSubmit={event => {event.preventDefault();startNewGame();}}>
-                            <input 
-                            className="loginInput overlayInput"
-                            type="text" 
-                            name="name" 
-                            autoComplete={"off"}
-                            value={bigBlind} 
-                            placeholder={"big blind size"}
-                            onChange={(event: ChangeEvent<HTMLInputElement>) => handleBBChange(event)}/>
-                        </form>
                         <form onSubmit={event => {event.preventDefault();startNewGame();}}>
                             <input 
                             className="loginInput overlayInput"
@@ -124,6 +113,16 @@ export default function GameStart(Props: GameStartProps) {
                             value={smallBlind} 
                             placeholder={"small blind size"}
                             onChange={(event: ChangeEvent<HTMLInputElement>) => handleSBChange(event)}/>
+                        </form>
+                        <form onSubmit={event => {event.preventDefault();startNewGame();}}>
+                            <input 
+                            className="loginInput overlayInput"
+                            type="text" 
+                            name="name" 
+                            autoComplete={"off"}
+                            value={bigBlind} 
+                            placeholder={"big blind size"}
+                            onChange={(event: ChangeEvent<HTMLInputElement>) => handleBBChange(event)}/>
                         </form>
                         <button className="loginButton overlayButton" onClick={() => setStartGameWorkflow(false)}>
                             Back

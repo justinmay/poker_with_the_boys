@@ -20,6 +20,10 @@
     height: 8vh;
 }
 
+.actionTextFaded { 
+    height: 8vh;
+}
+
 .betActionButton {
     height: 3vh;
     width: 5vh;
@@ -49,7 +53,11 @@
 }
 
 .long {
-    width: 22vh;
+    width: 28vh;
+}
+
+.medium {
+    width: 20vh;
 }
 
 .input {
@@ -73,6 +81,12 @@
 
 .greenBack {
     background-color: #00D8D8;
+    color: black;
+}
+
+.greenBackFaded {
+    background-color: rgb(0, 97, 97);
+    color: white
 }
 
 .redBack {
@@ -85,4 +99,9 @@
 
 .blueBack {
     background-color: #3BB5F7;;
+}
+
+.greyBack {
+    background-color: rgb(197, 197, 197);
+    color: white;
 }

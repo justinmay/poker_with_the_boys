@@ -1,12 +1,12 @@
 import React from "react";
 import '../stylesheets/cards.css';
-import {SubscriptionPlayer} from '../interfaces';
+import {SubscriptionPlayer, Hand} from '../interfaces';
 import {suits} from '../enums';
 import {getValueFromCardValueEnum} from '../helperFunctions';
 
 type HandProps = {
     playerInfo: SubscriptionPlayer,
-    hand: any,
+    hand: Hand,
     isDealer: boolean,
     isActionOnPlayer: boolean,
     hasStarted: boolean,

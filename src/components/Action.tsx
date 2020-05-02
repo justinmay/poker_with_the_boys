@@ -9,7 +9,9 @@ type ActionProps = {
     pot: number,
     me: SubscriptionPlayer,
     currBet: number,
-    canBet: boolean
+    actionIsOnYou: boolean,
+    isFolded: boolean,
+    hasStarted: boolean,
 };
 
 /**
@@ -18,6 +20,9 @@ type ActionProps = {
  */
 export function Action(props: ActionProps) {
     const [betAmount, setBetAmount] = useState("0");
+    const [isCheckFold, setIsCheckFold] = useState(false);
+    const [isCallX, setIsCallX] = useState(false);
+    const [isCallAny, setIsCallAny] = useState(false);
     const [bet] = useMutation(betMutation);
     const [fold] = useMutation(foldMutaiton);
     const [allIn] = useMutation(allInMutation);
@@ -44,7 +49,7 @@ export function Action(props: ActionProps) {
     }
     
     function betThisAmount() {
-        if (!props.canBet) return;
+        if (!props.actionIsOnYou) return;
         if (+betAmount === props.me.stack) {
             //if all in
             handleAllIn();
@@ -62,7 +67,7 @@ export function Action(props: ActionProps) {
     }
 
     function check() {
-        if (props.canBet){
+        if (props.actionIsOnYou){
             console.log("check")
             const values = { variables: { gameId: props.gameId, amount: 0} }
             bet(values);
@@ -72,7 +77,7 @@ export function Action(props: ActionProps) {
     }
 
     function call() {
-        if(props.canBet) {
+        if(props.actionIsOnYou) {
             if(props.me.stack <= props.currBet-(+betAmount)) {
                 console.log("call allin");
                 handleAllIn();
@@ -87,7 +92,7 @@ export function Action(props: ActionProps) {
     }
 
     function handefold() {
-        if (props.canBet) {
+        if (props.actionIsOnYou) {
             console.log("fold")
             const values = { variables: { gameId: props.gameId} }
             fold(values);
@@ -96,21 +101,61 @@ export function Action(props: ActionProps) {
     }
 
     function  handleAllIn() {
-        if (props.canBet) {
+        if (props.actionIsOnYou) {
             console.log("allin")
             const values = { variables: { gameId: props.gameId} }
             allIn(values);
         } 
     }
 
-    if (!props.canBet) {
-        return (<div></div>)
+    function showCards() {
+
+    }
+
+    if(!props.hasStarted || !props.me){
+        return(
+            <div></div>
+        )
+    }
+
+    if(props.isFolded) {
+        return(
+            <div className="actionRow">
+                <button className="actionButton greyBack" onClick={() => showCards()}>
+                    <p>
+                        Show Cards
+                    </p>
+                </button>
+            </div>
+        )
+    }
+
+    if(!props.actionIsOnYou) {
+        return(
+            <div className="actionRow">
+                <button className={`actionButton medium ${isCheckFold ? "greenBack" : ""}`} onClick={() => check()}>
+                    <p>
+                        Check/Fold
+                    </p>
+                </button>
+                <button className="actionButton medium" onClick={() => check()}>
+                    <p>
+                        Call X
+                    </p>
+                </button>
+                <button className="actionButton medium" onClick={() => check()}>
+                    <p>
+                        Call Any
+                    </p>
+                </button>
+            </div>
+        )
     }
 
     return (
         <div className="actionRow">
             {
-                (props.me.betAmount === props.currBet) || (props.me.betAmount <= 0 && props.currBet <= 0) ? 
+                (props.me.betAmount === props.currBet) || (props.me?.betAmount <= 0 && props.currBet <= 0) ? 
                 <button className="actionButton greenBack" onClick={() => check()}>
                     <p>
                         Check
@@ -127,6 +172,7 @@ export function Action(props: ActionProps) {
                     Fold
                 </p>
             </button>
+            
             <button className="actionButton yellowBack" onClick={() => betThisAmount()}>
                 <p>
                     { 
@@ -138,28 +184,33 @@ export function Action(props: ActionProps) {
             </button>
             <div className="betContainer">
                 <div className="betActionButtonContainer">
-                    <button className="actionButton yellowBack betActionButton" onClick={() => handleSizePress(.5)}>
+                    <button className="actionButton betActionButton yellowBack" onClick={() => handleSizePress(.5)}>
                         <p>
                             1/2
                         </p>
                     </button>
-                    <button className="actionButton yellowBack betActionButton" onClick={() => handleSizePress(.75)}>
+                    <button className="actionButton betActionButton yellowBack" onClick={() => handleSizePress(.75)}>
                         <p>
                             3/4
                         </p>
                     </button>
-                    <button className="actionButton yellowBack betActionButton" onClick={() => handleSizePress(1)}>
+                    <button className="actionButton betActionButton yellowBack" onClick={() => handleSizePress(1)}>
                         <p>
                             Pot
                         </p>
                     </button>
-                    <button className="actionButton yellowBack betActionButton" onClick={() => handleSizePress(-1)}>
+                    <button className="actionButton betActionButton yellowBack" onClick={() => handleSizePress(3)}>
+                        <p>
+                            3x
+                        </p>
+                    </button>
+                    <button className="actionButton betActionButton yellowBack" onClick={() => handleSizePress(-1)}>
                         <p>
                             Rip It
                         </p>
                     </button>
                 </div>
-                <form className="actionButton long actionText">
+                <form className={`actionButton long ${props.actionIsOnYou ? 'actionText':'actionText'}`}>
                         <input 
                         className="input yellowBack"
                         type="text" 
@@ -168,6 +219,11 @@ export function Action(props: ActionProps) {
                         onChange={(event: ChangeEvent<HTMLInputElement>) => handleChange(event)}/>
                 </form>
             </div>
+            <button className="actionButton greyBack" onClick={() => showCards()}>
+                <p>
+                    Show Cards
+                </p>
+            </button>
             
         </div>
     )

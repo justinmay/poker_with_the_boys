@@ -55,6 +55,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     }
 
     function handleBuyMore(amount: number) {
+        console.log(`buying back in for ${amount}`);
         const values = { variables: { amount: amount, position: props.position, gameId: props.gameId } }
         buyBackInMut(values).then(({data}) => {
             console.log(data);
@@ -91,11 +92,14 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
                         </button> : 
                         null
                     }
-                    <button className="loginButton overlayButton" onClick={() => handleBuyMore(50)}>
+                    <button className="loginButton overlayButton" onClick={() => handleBuyMore(50 * props.bigBlindSize)}>
                         Buy 50 BB
                     </button>
-                    <button className="loginButton overlayButton" onClick={() => handleBuyMore(100)}>
+                    <button className="loginButton overlayButton" onClick={() => handleBuyMore(100 * props.bigBlindSize)}>
                         Buy 100 BB
+                    </button>
+                    <button className="loginButton overlayButton" onClick={() => handleBuyMore(100 * props.bigBlindSize)}>
+                        Stand Up
                     </button>
                 </div> :
                 <div className="settingsOverlayContainer">
