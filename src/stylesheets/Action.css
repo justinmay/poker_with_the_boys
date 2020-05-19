@@ -53,7 +53,7 @@
 }
 
 .long {
-    width: 28vh;
+    width: 24vh;
 }
 
 .medium {
@@ -71,7 +71,7 @@
 }
 
 .actionRow {
-    height: 25vh;
+    height: 19vh;
     width: 100vw;
     display: flex;
     flex-direction: row;

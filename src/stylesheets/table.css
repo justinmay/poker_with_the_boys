@@ -14,14 +14,14 @@
 
 .tableLayer {
     position: absolute;
-    height: 25vh;
+    height: 27vh;
     width: 50vw;
     display: flex;
     z-index: 2;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    top: 25vh;
+    top: 27vh;
     left: 25vw;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .row {
-    height: 25vh;
+    height: 27vh;
     width: 100vw;
     display: flex;
     flex-direction: row;

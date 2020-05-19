@@ -1,10 +1,15 @@
 import React, {ChangeEvent, useState} from "react";
 import '../stylesheets/Login.css';
-import {Redirect} from "react-router-dom";
+import {Redirect, useParams} from "react-router-dom";
 import { useMutation} from '@apollo/react-hooks';
 import {signUpQuery, signInQuery} from '../queries';
 import Settings from '../settings';
 import {AUTH_TOKEN} from '../constants';
+import {createGameMutation, joinGameQuery} from '../queries';
+
+interface LoginParams {
+    gameid: string
+}
 
 type LoginAfterDataProps = {
 };
@@ -17,6 +22,9 @@ export function Login(Props: LoginAfterDataProps) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);// eslint-disable-next-line
     const [signUp, {  loading: signUpLoading, error: signUpError }] = useMutation(signUpQuery);// eslint-disable-next-line
     const [signIn, { loading: signInLoading, error: signInError}] = useMutation(signInQuery, { errorPolicy: 'all' });
+    const params = useParams<LoginParams>();
+    const [isGoToGame, setIsGoToGame] = useState(false);
+    const [joinGame, { loading: joinGameLoading, error: joinGameError }] = useMutation(joinGameQuery);    
 
     function login(e: any) {
         e.preventDefault();
@@ -29,8 +37,8 @@ export function Login(Props: LoginAfterDataProps) {
             signIn(values).then( ({data}) => {
                 //getting the token 
                 _saveUserData(data.signIn.token);
-                console.log("token",data.signIn.token);
-                setIsLoggedIn(true);
+                
+                
             }).catch(e => {
                 console.log(e);
               });
@@ -39,6 +47,31 @@ export function Login(Props: LoginAfterDataProps) {
 
     function _saveUserData(token: string) {
         localStorage.setItem(AUTH_TOKEN, token);
+        console.log("token",token);
+        routeToNextScreen();
+    }
+
+    function routeToNextScreen() {
+        //checking for valid gameID
+        if (params.gameid) {
+            const gameId = params.gameid
+            const values = { variables: { gameId} };
+            joinGame(values).then(e => {
+                console.log("join game", e);
+                if(e.data.joinGame) {
+                    setIsGoToGame(true);
+                } else {
+                    console.log("invalid gameid") //TODO PUT IN USER RESPONSE
+                    setIsLoggedIn(true);
+                }
+            }).catch(error => {
+                console.log("join game error");
+                console.log(error);
+            })
+            
+        } else {
+            setIsLoggedIn(true);
+        }
     }
 
     function handleSignUp(e: any) { //todo: TEST THIS
@@ -49,21 +82,21 @@ export function Login(Props: LoginAfterDataProps) {
                 // saving user token to local storage
                 console.log(data)
                 _saveUserData(data.signUp.token);
-                setIsLoggedIn(true);
             }).catch(e => {
                 console.log(e);
             });
         }
         setShowSignUpScreen(true);
     }
-    
 
     return (
         <div className="loginContainer">
-          {
-              isLoggedIn ? <Redirect to={{
-                pathname: '/GameStart'
-            }} /> :
+            {
+               isGoToGame && <Redirect to={{ pathname: `/poker/${params.gameid}` }} /> 
+            }
+            {
+            isLoggedIn ?
+            <Redirect to={{pathname: '/GameStart'}} /> :
           
             <div className="loginContent">
                 <div>

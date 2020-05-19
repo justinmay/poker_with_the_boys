@@ -22,6 +22,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     const [buyBackInMut] = useMutation(addToStackMutation);
     const [invalidBuyin, setInvalidBuyin] = useState(false);
     const [buyIn, setBuyIn] = useState("");
+    let copyLink: HTMLTextAreaElement | null = null;
 
     function handBuyIn() {
         if (+buyIn === 0) {
@@ -77,14 +78,30 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
         });
     }
 
+    function copyURLtoClipboard() {
+        copyLink!.select();
+        document.execCommand("copy");
+        copyLink!.blur();
+    }
+
     return(
         <div className="overlay">
-            <div className="loginContent lessOpacity">
+            
+            <div className="settingsContent lessOpacity">
+                 <textarea
+                    className="smolAndInvs"
+                    ref={(textarea) => copyLink = textarea}
+                    value={"localhost:3000/poker/" + props.gameId}
+                    readOnly={true}
+                />
                 {props.hasBoughtIn ?
                 <div className="settingsOverlayContainer">
                     {startGameLoading && <h2 className="loginInvalidUsername"> Creating Game...</h2>}
                     {startGameError && <h2 className="loginInvalidUsername"> Error creating game</h2>}
                     <h3 className="settingsFields">gameid: {props.gameId}</h3>
+                    <button className="loginButton overlayButton" onClick={() => copyURLtoClipboard()}>
+                        Copy Share Link
+                    </button>
                     {
                         props.shouldShowStartGame ? 
                         <button className="loginButton overlayButton" onClick={() => startGame()}>

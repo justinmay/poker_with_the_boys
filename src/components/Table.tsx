@@ -7,24 +7,24 @@ import Action from './Action';
 import TableCards from './TableCards';
 import SitDown from './SitDown';
 import SettingsOverlay from './SettingsOverlay';
-import { useLocation } from "react-router-dom";
 import YourHand from './YourHand';
 import { useQuery, useMutation} from '@apollo/react-hooks';
 import { getDataQuery, getMe, getPlayerByIDQuery} from '../queries';
 import {getCardFromSubscriptionCard, getCardNumberEnumFromString, getSuitEnumFromString} from '../helperFunctions';
 import {mockHand} from '../mockData';
+import AudioController from './AudioController';
 
   type TableProps = { 
     subscriptionData: subscriptionData | undefined;
+    gameid: string;
   }
 
   function Table(Props: TableProps) {
-    // Grab props passed from GameStart
-    const location: any = useLocation();
     // query to trigger subscription publish 
-    useQuery(getDataQuery, { variables: { gameId: location.state.gameId } });
+    useQuery(getDataQuery, { variables: { gameId: Props.gameid } });
     // Get subscription data
     const data = Props.subscriptionData;
+    console.log("data", data);
     // Get user data 
     const {data: meData} = useQuery(getMe);
     let me: SubscriptionPlayer | undefined = undefined;
@@ -45,9 +45,8 @@ import {mockHand} from '../mockData';
     const [showSettingsOverlay, setShowSettingsOverlay] = useState(false);
     const shouldGetNewHand = useRef(true);
     const hasNeverGottenAHand = useRef(true);
-    
     const [currentHand, setCurrentHand] = useState(mockHand);
-    const [getPlayerByID,] = useMutation(getPlayerByIDQuery, { variables: { gameId: location.state.gameId , position: seatNumber} });
+    const [getPlayerByID,] = useMutation(getPlayerByIDQuery, { variables: { gameId: Props.gameid , position: seatNumber} });
 
     useEffect(() => {
       if(data) {
@@ -105,7 +104,7 @@ import {mockHand} from '../mockData';
       }
 
       if( (hasStarted && hasNeverGottenAHand.current) || (hasStarted && shouldGetNewHand.current && data.state ==="newRound")) {
-        const values = { variables: { gameId: location.state.gameId, position: seatNumber } };
+        const values = { variables: { gameId: Props.gameid, position: seatNumber } };
         getPlayerByID(values).then(({data}) => {
             // saving user token to local storage
             setCurrentHand({
@@ -125,8 +124,27 @@ import {mockHand} from '../mockData';
         hasNeverGottenAHand.current = false;
       }
     } 
+
+    function notifyMe() {
+      // Let's check if the browser supports notifications
+      if (!("Notification" in window)) {
+        //alert("This browser does not support desktop notification");
+      }
     
-    
+      // Let's check whether notification permissions have already been granted
+      else if (Notification.permission === "granted") {
+        // If it's okay let's create a notification
+        var notification = new Notification("It's your turn!");
+      }
+    }
+
+    useEffect(() => {
+      if(data && me && data.action !== undefined && data.action === me.position) {
+        console.log("it's your turn!")
+        notifyMe();
+      }
+    });
+
     function dismissSettingsOverlay() {
       setShowSettingsOverlay(false);
     }
@@ -184,7 +202,7 @@ import {mockHand} from '../mockData';
         {showSettingsOverlay ? <SettingsOverlay 
           setHasStarted={()=>setHasStarted(true)}
           showSettingsOverlay={() => dismissSettingsOverlay()} 
-          gameId={location.state.gameId} 
+          gameId={Props.gameid} 
           hasBoughtIn={hasBoughtIn}
           setHasBoughtInTrue={() => setHasBoughtIn(true)}
           position={seatNumber}
@@ -217,13 +235,15 @@ import {mockHand} from '../mockData';
             { player(player7,7) }
           </div>
           <TableCards flop={flop} potSize={data ? data.potSize: 0}/>
-        <Action currBet={data ? data.curBet : 0} 
-        me={me!} gameId={location.state.gameId} 
-        pot={data ? data.potSize: 0} 
-        actionIsOnYou={data ? data.action===me?.position : 0===me?.position}
-        isFolded={false}
-        hasStarted={hasStarted}/>
-        </div>
+          <Action currBet={data ? data.curBet : 0} 
+          me={me!} gameId={Props.gameid} 
+          pot={data ? data.potSize: 0} 
+          actionIsOnYou={data ? data.action===me?.position : 0===me?.position}
+          isFolded={false}
+          alreadyBetAmount={me ? me.betAmount: 0}
+          hasStarted={hasStarted}/>
+          </div>
+          <AudioController subscriptionData={data} me={me}/>
       </div>
     )
   }

@@ -33,7 +33,28 @@ h1 {
     font-size: 3vh;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.349), 0 6px 20px 0 rgba(0, 0, 0, 0.616);
     margin-left: .5vw;
-    margin-right: .5vw
+    margin-right: .5vw;
+}
+
+.CenterCard {
+    height: 12vh;
+    width: 9.6vh;
+    background-color: #FFFCF9;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 3vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.349), 0 6px 20px 0 rgba(0, 0, 0, 0.616);
+    margin-left: .5vw;
+    margin-right: .5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.CenterCard > p {
+    height: 4vh;
+    margin: 0;
+    font-size: 4vh;
 }
 
 .Folded {
@@ -88,7 +109,7 @@ h1 {
 }
 
 .ActionHand > .Card {
-    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.753), 0 6px 20px 0 rgba(255, 255, 255, 0.719);
+    box-shadow: 0px 0px 15px 10px rgba(135, 255, 249, 0.61);
 }
 
 .GoldenCards {
