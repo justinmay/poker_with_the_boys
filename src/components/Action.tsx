@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import '../stylesheets/Action.css';
 import {useMutation} from '@apollo/react-hooks';
-import {betMutation, foldMutaiton, allInMutation} from '../queries';
+import {betMutation, foldMutaiton, allInMutation, showCardsMutation} from '../queries';
 import {SubscriptionPlayer} from '../interfaces';
 
 type ActionProps = {
@@ -27,6 +27,7 @@ export function Action(props: ActionProps) {
     const [bet] = useMutation(betMutation);
     const [fold] = useMutation(foldMutaiton);
     const [allIn] = useMutation(allInMutation);
+    const [showCards] = useMutation(showCardsMutation);
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         let bet = event.target.value;
@@ -36,6 +37,16 @@ export function Action(props: ActionProps) {
             setWillBetAmount(bet);
         }
         
+    }
+
+    function handleShowCards() {
+        console.log("Show Cards");
+        const values = { variables: { gameId: props.gameId} }
+        showCards(values)
+        .then()
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     function handleSizePress(modifier: number) {
@@ -109,10 +120,6 @@ export function Action(props: ActionProps) {
             allIn(values);
         } 
         setWillBetAmount("0");
-    }
-
-    function showCards() {
-
     }
 
     if(!props.hasStarted || !props.me){
@@ -246,7 +253,7 @@ export function Action(props: ActionProps) {
                         onChange={(event: ChangeEvent<HTMLInputElement>) => handleChange(event)}/>
                 </form>
             </div>
-            <button className="actionButton greyBack" onClick={() => showCards()}>
+            <button className="actionButton greyBack" onClick={() => handleShowCards()}>
                 <p>
                     Show Cards
                 </p>

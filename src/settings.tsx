@@ -1,7 +1,7 @@
 export default class Settings {
     static dev = false;
-    static code = "d38b2aa3";
-    static mode = "heroku"
+    static code = "69213746";
+    static mode = "ngrok"
     static localhost_uri = 'localhost:8000/graphql';
     static heroku_uri = "poker-graphql-backend.herokuapp.com/graphql"
     //static ngrok_uri = "http://localhost:8000/graphql"

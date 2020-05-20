@@ -70,6 +70,12 @@ mutation player($position: Int!, $gameId: ID!) {
 }
 `
 
+export const showCardsMutation = gql`
+mutation showCards($gameId: ID!) {
+  showCards(gameId: $gameId)
+}
+`
+
 export const subscriptionQuery = gql`
 subscription change($gameId: ID!) {
   change(gameId: $gameId){

@@ -38,6 +38,7 @@ function HandComponent(props: HandProps) {
             <div className="playerStack">
                 {props.playerInfo.stack}
             </div>
+            <div className="timerBar"/>
             {props.playerInfo.betAmount > -1 ?
             <div className="PlayerBet">
                 {props.playerInfo.betAmount === 0 ? "check" : props.playerInfo.betAmount}

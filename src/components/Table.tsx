@@ -54,6 +54,14 @@ import AudioController from './AudioController';
           setIsSitting(true);
           setHasBoughtIn(true);
           setSeatNumber(me.position);
+        } else {
+          // if the game is done set sitting false 
+          if(isSitting) {
+            setIsSitting(false);
+          }
+          if(hasBoughtIn) {
+            setHasBoughtIn(false);
+          }
         }
         if (data.state !== "notStarted") {
           setHasStarted(true);

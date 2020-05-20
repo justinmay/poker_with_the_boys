@@ -122,7 +122,7 @@ h1 {
 }
 
 .GoldenCards > .Card {
-    box-shadow: 0 4px 8px 0 rgba(247, 190, 4, 0.849), 0 6px 20px 0 rgba(247, 190, 4, 0.849);
+    box-shadow: 0px 0px 15px 10px rgba(247, 190, 4, 0.849);
 }
 
 .PlayerBet {
@@ -143,6 +143,14 @@ h1 {
     font-size: 3vh;
     font-weight: bold;
     border-radius: 5px;
+}
+
+.timerBar {
+    height: 1vh;
+    width: 16vh;
+    background-color: #00D8D8;
+    border-radius: 2px;
+    margin: .5vh;
 }
 
 .red {
