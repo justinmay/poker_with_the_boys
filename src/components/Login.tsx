@@ -100,7 +100,7 @@ export function Login(Props: LoginAfterDataProps) {
           
             <div className="loginContent">
                 <div>
-                    <h1 className="loginHeader">Poker With The Boys</h1>
+                    <h1 className="loginHeader">Poker With The Boys - HBD mateo!</h1>
                     <h1 className="loginSymbols">♤ ♡ ♢ ♧</h1>
                 </div>
 
